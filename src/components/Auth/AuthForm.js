@@ -1,12 +1,15 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useContext } from "react";
 
 import classes from "./AuthForm.module.css";
+import AppContext from "../../context/AppContext";
 
 const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showLoader, setShowLoader] = useState(false);
   const emailInput = useRef(null);
   const passwordInput = useRef(null);
+  const ctx = useContext(AppContext);
+  console.log(ctx);
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -53,6 +56,7 @@ const AuthForm = () => {
       })
       .then((data) => {
         console.log(data);
+        ctx.addTokenId(data.idToken);
       })
       .catch((err) => {
         alert(err);

@@ -4,10 +4,13 @@ import "./index.css";
 import { RouterProvider } from "react-router-dom";
 import { appRouter } from "./App";
 import App from "./App";
+import AppContextProvider from "./context/AppContextProvider";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-  <RouterProvider router={appRouter}>
-    <App />
-  </RouterProvider>
+  <AppContextProvider>
+    <RouterProvider router={appRouter}>
+      <App />
+    </RouterProvider>
+  </AppContextProvider>
 );
