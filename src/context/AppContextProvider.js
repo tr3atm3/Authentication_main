@@ -1,4 +1,4 @@
-import { useReducer } from "react";
+import { useEffect, useReducer } from "react";
 import AppContext from "./AppContext";
 
 const defaultState = {
@@ -25,12 +25,24 @@ const reducerFunc = (state, action) => {
 const AppContextProvider = (props) => {
   const [allStates, dispatch] = useReducer(reducerFunc, defaultState);
 
+  //   useEffect(() => {
+  //     let timerId = setTimeout(() => {
+  //       localStorage.removeItem("tokenId");
+  //     }, 3000);
+
+  //     return () => {
+  //       clearTimeout(timerId);
+  //     };
+  //   }, []);
   const addTokenId = (id) => {
     dispatch({
       type: "ADDID",
       value: id,
     });
     localStorage.setItem("tokenId", id);
+    setTimeout(() => {
+      localStorage.removeItem("tokenId");
+    }, 300000);
   };
 
   const removeTokenId = () => {
