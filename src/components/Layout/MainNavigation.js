@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import classes from "./MainNavigation.module.css";
 import { useContext } from "react";
@@ -6,8 +6,10 @@ import AppContext from "../../context/AppContext";
 
 const MainNavigation = () => {
   const ctx = useContext(AppContext);
+  const nav = useNavigate();
   const handleLogoutBtn = () => {
     ctx.removeTokenId();
+    nav("/auth");
   };
   return (
     <header className={classes.header}>
