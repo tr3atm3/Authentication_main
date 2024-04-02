@@ -6,7 +6,7 @@ const AuthForm = () => {
   const [isLogin, setIsLogin] = useState(true);
   const [showLoader, setShowLoader] = useState(false);
   const emailInput = useRef(null);
-  const passwordInput = useRef();
+  const passwordInput = useRef(null);
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -17,36 +17,46 @@ const AuthForm = () => {
     const enteredEmail = emailInput.current.value;
     const enteredPassword = passwordInput.current.value;
     setShowLoader(true);
-
+    let url;
     if (isLogin) {
+      url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyC7sVHD3PsWo_Lma3A_MJKwkcCo-BjiFm8";
     } else {
-      fetch(
-        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC7sVHD3PsWo_Lma3A_MJKwkcCo-BjiFm8",
-        {
-          method: "POST",
-          body: JSON.stringify({
-            email: enteredEmail,
-            password: enteredPassword,
-            returnSecureToken: true,
-          }),
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      ).then((res) => {
+      url =
+        "https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyC7sVHD3PsWo_Lma3A_MJKwkcCo-BjiFm8";
+    }
+    fetch(url, {
+      method: "POST",
+      body: JSON.stringify({
+        email: enteredEmail,
+        password: enteredPassword,
+        returnSecureToken: true,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
         setShowLoader(false);
         if (res.ok) {
+          return res.json();
         } else {
           return res.json().then((data) => {
             let errorMessage = "Authentication Failed";
             if (data?.error?.message) {
               errorMessage = data.error.message;
             }
-            alert(errorMessage);
+
+            throw new Error(errorMessage);
           });
         }
+      })
+      .then((data) => {
+        console.log(data);
+      })
+      .catch((err) => {
+        alert(err);
       });
-    }
   };
 
   return (
