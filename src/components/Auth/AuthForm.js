@@ -34,10 +34,10 @@ const AuthForm = () => {
           },
         }
       ).then((res) => {
+        setShowLoader(false);
         if (res.ok) {
         } else {
           return res.json().then((data) => {
-            setShowLoader(false);
             let errorMessage = "Authentication Failed";
             if (data?.error?.message) {
               errorMessage = data.error.message;
@@ -61,7 +61,8 @@ const AuthForm = () => {
           <label htmlFor="password">Your Password</label>
           <input type="password" id="password" required ref={passwordInput} />
         </div>
-        <button type="submit">{showLoader ? "Siging Up..." : "Sign up"}</button>
+        {showLoader && <button type="submit"> Signing Up...</button>}
+        {!showLoader && <button>{isLogin ? "Login" : "Create Account"}</button>}
         <div className={classes.actions}>
           <button
             type="button"
