@@ -1,8 +1,8 @@
-import { useReducer, useState } from "react";
+import { useReducer } from "react";
 import AppContext from "./AppContext";
 
 const defaultState = {
-  userLoginIdToken: null,
+  userLoginIdToken: localStorage.getItem("tokenId"),
 };
 
 const reducerFunc = (state, action) => {
@@ -25,20 +25,19 @@ const reducerFunc = (state, action) => {
 const AppContextProvider = (props) => {
   const [allStates, dispatch] = useReducer(reducerFunc, defaultState);
 
-  useState(() => {
-    console.log(allStates);
-  });
   const addTokenId = (id) => {
     dispatch({
       type: "ADDID",
       value: id,
     });
+    localStorage.setItem("tokenId", id);
   };
 
   const removeTokenId = () => {
     dispatch({
       type: "REMOVEID",
     });
+    localStorage.removeItem("tokenId");
   };
 
   const contextValue = {

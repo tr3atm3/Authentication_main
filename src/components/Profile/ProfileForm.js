@@ -1,11 +1,17 @@
 import { useContext, useRef } from "react";
 import classes from "./ProfileForm.module.css";
 import AppContext from "../../context/AppContext";
+import { useNavigate } from "react-router-dom";
 
 const ProfileForm = () => {
   const newPasswordRef = useRef(null);
   const ctx = useContext(AppContext);
 
+  const nav = useNavigate();
+
+  // if (ctx.userLoginIdToken === null) {
+  //   nav("/auth");
+  // }
   const submitHandler = (e) => {
     e.preventDefault();
 
