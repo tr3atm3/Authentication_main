@@ -9,7 +9,6 @@ const AuthForm = () => {
   const emailInput = useRef(null);
   const passwordInput = useRef(null);
   const ctx = useContext(AppContext);
-  console.log(ctx);
 
   const switchAuthModeHandler = () => {
     setIsLogin((prevState) => !prevState);
@@ -61,6 +60,8 @@ const AuthForm = () => {
       .catch((err) => {
         alert(err);
       });
+    emailInput.current.value = null;
+    passwordInput.current.value = null;
   };
 
   return (
